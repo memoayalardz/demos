@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Invitación XV | Kelly Michelle García Durán</title>
+  <meta name="description" content="Invitación digital de XV años elegante, visual y responsiva." />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;500;600;700;800&family=Playfair+Display:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['Playfair Display', 'serif'],
+            script: ['Great Vibes', 'cursive'],
+            body: ['Montserrat', 'sans-serif']
+          },
+          colors: {
+            pearl: '#fffafc',
+            blush: {
+              50: '#f8f9ff',
+              100: '#f0f6ff',
+              200: '#dbedff',
+              300: '#c3caff',
+              400: '#9cacf5',
+              500: '#7388ea',
+              600: '#4f83d6',
+              700: '#3b64b9',
+              800: '#30598e',
+              900: '#232d5f'
+            },
+            gold: {
+              100: '#fff8e8',
+              200: '#f6e5b5',
+              300: '#ecd181',
+              400: '#dfb955',
+              500: '#cfa03b'
+            },
+            ink: '#1b202a'
+          },
+          boxShadow: {
+            soft: '0 18px 45px rgba(34, 53, 99, 0.1)',
+            glam: '0 24px 70px rgba(15, 23, 38, 0.20)',
+            glass: '0 18px 50px rgba(0, 0, 0, 0.16)'
+          },
+          backgroundImage: {
+            'hero-fade': 'linear-gradient(180deg, rgba(10,12,22,.18) 0%, rgba(10,12,22,.38) 45%, rgba(10,12,22,.78) 100%)',
+            'section-glow': 'radial-gradient(circle at top, rgba(235, 236, 255, 0.85), rgba(250, 250, 255, 0) 55%)'
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background:
+        radial-gradient(circle at top, rgba(238, 239, 255, 0.85), transparent 28%),
+        linear-gradient(180deg, #fafbff 0%, #f7f9ff 40%, #fafbff 100%);
+      color: #2a1b24;
+    }
+
+    .glass {
+      background: rgba(255, 255, 255, 0.14);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+    }
+
+    .glass-light {
+      background: rgba(255, 255, 255, 0.78);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid rgba(255, 255, 255, 0.9);
+    }
+
+    .section-fade {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity .85s ease, transform .85s ease;
+    }
+
+    .section-fade.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .divider {
+      width: 100%;
+      max-width: 120px;
+      height: 1px;
+      margin: 0 auto;
+      background: linear-gradient(90deg, transparent, rgba(207,160,59,.95), transparent);
+    }
+
+    .editorial-card img,
+    .gallery-card img,
+    .hero-image {
+      transition: transform .8s ease;
+    }
+
+    .editorial-card:hover img,
+    .gallery-card:hover img {
+      transform: scale(1.04);
+    }
+
+    .welcome-screen {
+      transition: opacity .7s ease, visibility .7s ease, transform .7s ease;
+    }
+
+    .welcome-screen.hide {
+      opacity: 0;
+      visibility: hidden;
+      transform: scale(1.02);
+    }
+  </style>
+</head>
+<body class="font-body antialiased selection:bg-blush-200 selection:text-blush-900">
+
+  <audio id="bgMusic" loop>
+    <source src="JVKE - golden hour  - JVKE.mp3" type="audio/mpeg"> 
+  </audio>
+
+  <div id="welcomeScreen" class="welcome-screen fixed inset-0 z-[80] flex items-center justify-center bg-black/50 px-6">
+    <div class="glass-light w-full max-w-md rounded-[2rem] p-8 text-center shadow-glam">
+      <p class="text-xs font-semibold uppercase tracking-[0.45em] text-blush-500">Invitación digital</p>
+      <h2 class="mt-4 font-display text-3xl text-blush-900">Mis XV años</h2>
+      <p class="mt-4 text-sm leading-7 text-zinc-600">
+        Gracias por acompañarme en uno de los momentos más especiales de mi vida.
+      </p>
+      <button id="openInvitation" class="mt-7 inline-flex rounded-full bg-blush-600 px-7 py-3 text-sm font-semibold text-white shadow-soft transition hover:scale-[1.03] hover:bg-blush-700">
+        Abrir invitación
+      </button>
+    </div>
+  </div>
+
+  <button id="musicToggle" class="fixed right-4 top-4 z-50 flex h-12 w-12 items-center justify-center rounded-full bg-white/90 text-blush-700 shadow-soft ring-1 ring-white/70 transition hover:scale-105" aria-label="Activar música">
+    <span id="musicIcon" class="text-lg">♫</span>
+  </button>
+
+  <a href="https://wa.me/528442958861" target="_blank" rel="noreferrer" class="fixed bottom-5 right-4 z-50 inline-flex items-center gap-2 rounded-full bg-green-500 px-4 py-3 text-sm font-semibold text-white shadow-lg transition hover:scale-105 hover:bg-green-600">
+    <span>WhatsApp</span>
+  </a>
+
+  <main>
+    <!-- HERO -->
+    <section class="relative min-h-screen overflow-hidden">
+      <div class="absolute inset-0">
+        <img oncontextmenu="return false;" draggable="false" src="header.png" alt="Kelly Michelle García Durán" class="hero-image h-full w-full object-cover object-center md:object-[center_28%]" />
+        <div class="absolute inset-0 bg-hero-fade"></div>
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,243,248,.20),transparent_28%)]"></div>
+      </div>
+
+      <div class="relative z-10 mx-auto flex min-h-screen max-w-7xl flex-col justify-between px-4 pb-8 pt-8 sm:px-6 lg:px-8">
+        <div class="flex justify-center md:justify-end">
+          <div class="glass rounded-full px-4 py-2 text-[11px] font-medium uppercase tracking-[0.3em] text-white/90">
+            Sábado 30 de mayo de 2026
+          </div>
+        </div>
+
+        <div class="grid items-end gap-10 pb-6 pt-16 md:grid-cols-[1.08fr_.92fr] md:pt-24">
+          <div class="max-w-3xl text-center md:text-left text-white">
+            <p class="text-[10px] font-semibold uppercase tracking-[0.55em] text-white/90 sm:text-xs">Mis XV años</p>
+            <h1 class="mt-4 font-display text-5xl font-semibold leading-[0.95] tracking-tight sm:text-6xl md:text-7xl lg:text-[5.8rem]">
+              Kelly Michelle García Durán
+            </h1>
+            <p class="mt-5 max-w-xl text-sm leading-7 text-white/85 sm:text-base md:text-lg">
+              Con mucha ilusión quiero compartir contigo una noche mágica, llena de alegría, amor y recuerdos que llevaré siempre en mi corazón.
+            </p>
+
+            <div class="mt-8 flex flex-wrap items-center justify-center gap-3 md:justify-start">
+              <a href="#detalle-evento" class="inline-flex rounded-full bg-white px-7 py-3 text-sm font-semibold text-blush-700 shadow-glam transition hover:scale-[1.03]">
+                Ver detalles
+              </a>
+              <a href="#galeria" class="inline-flex rounded-full border border-white/30 bg-white/10 px-7 py-3 text-sm font-semibold text-white backdrop-blur transition hover:scale-[1.03] hover:bg-white/15">
+                Ver galería
+              </a>
+            </div>
+          </div>
+
+          <div class="mx-auto w-full max-w-md md:mr-0 md:max-w-none">
+            <div class="glass rounded-[2rem] p-4 shadow-glass sm:p-5">
+              <div class="grid grid-cols-2 gap-3 sm:grid-cols-4 md:grid-cols-2 xl:grid-cols-4">
+                <div class="rounded-[1.5rem] bg-white/12 p-4 text-center ring-1 ring-white/12">
+                  <div id="days" class="text-3xl font-bold text-white sm:text-4xl">00</div>
+                  <div class="mt-1 text-[11px] uppercase tracking-[0.28em] text-white/75">Días</div>
+                </div>
+                <div class="rounded-[1.5rem] bg-white/12 p-4 text-center ring-1 ring-white/12">
+                  <div id="hours" class="text-3xl font-bold text-white sm:text-4xl">00</div>
+                  <div class="mt-1 text-[11px] uppercase tracking-[0.28em] text-white/75">Horas</div>
+                </div>
+                <div class="rounded-[1.5rem] bg-white/12 p-4 text-center ring-1 ring-white/12">
+                  <div id="minutes" class="text-3xl font-bold text-white sm:text-4xl">00</div>
+                  <div class="mt-1 text-[11px] uppercase tracking-[0.28em] text-white/75">Minutos</div>
+                </div>
+                <div class="rounded-[1.5rem] bg-white/12 p-4 text-center ring-1 ring-white/12">
+                  <div id="seconds" class="text-3xl font-bold text-white sm:text-4xl">00</div>
+                  <div class="mt-1 text-[11px] uppercase tracking-[0.28em] text-white/75">Segundos</div>
+                </div>
+              </div>
+
+              <div class="mt-4 rounded-[1.5rem] bg-white/10 px-4 py-4 text-center text-sm text-white/85 ring-1 ring-white/10">
+                Faltan muy pocos días para celebrar juntos esta fecha tan especial.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex justify-center">
+          <a href="#detalle-evento" class="inline-flex flex-col items-center gap-2 text-xs uppercase tracking-[0.28em] text-white/85">
+            Desliza
+            <span class="flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-white/10 text-lg backdrop-blur">↓</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- INTRO -->
+    <section id="detalle-evento" class="section-fade px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
+      <div class="mx-auto max-w-4xl text-center">
+        <p class="font-script text-4xl text-blush-500 sm:text-5xl">Con la bendición de Dios</p>
+        <h2 class="mt-4 font-display text-3xl text-blush-900 sm:text-4xl md:text-5xl">
+          Quiero compartir contigo este día tan especial
+        </h2>
+        <p class="mx-auto mt-6 max-w-2xl text-sm leading-8 text-zinc-600 sm:text-base">
+          Acompáñame a celebrar una noche inolvidable llena de emoción, cariño y momentos hermosos junto a mi familia y las personas más importantes en mi vida.
+        </p>
+      </div>
+    </section>
+
+    <!-- FOTO EDITORIAL -->
+    <section class="section-fade px-4 pb-10 sm:px-6 lg:px-8">
+      <div class="editorial-card mx-auto max-w-6xl overflow-hidden rounded-[2.25rem] bg-white shadow-glam">
+        <div class="grid md:grid-cols-[1.12fr_.88fr]">
+          <div class="overflow-hidden">
+            <img oncontextmenu="return false;" draggable="false" src="xv-2.png" alt="Kelly Michelle fotografía editorial" class="h-full min-h-[360px] w-full object-cover md:min-h-[620px]" />
+          </div>
+          <div class="flex items-center bg-gradient-to-br from-white via-blush-50 to-white px-8 py-12 sm:px-10 md:px-12">
+            <div>
+              <p class="text-xs font-semibold uppercase tracking-[0.38em] text-blush-500">Una noche mágica</p>
+              <h3 class="mt-4 font-display text-3xl leading-tight text-blush-900 sm:text-4xl">
+                Un recuerdo para atesorar por siempre
+              </h3>
+              <p class="mt-6 text-sm leading-8 text-zinc-600 sm:text-base">
+                Cada detalle de esta celebración está pensado con amor para compartir un momento inolvidable contigo. Gracias por ser parte de esta historia.
+              </p>
+              <a href="#confirmacion" class="mt-8 inline-flex rounded-full bg-blush-600 px-7 py-3 text-sm font-semibold text-white shadow-soft transition hover:scale-[1.03] hover:bg-blush-700">
+                Confirmar asistencia
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DETALLES -->
+    <section class="section-fade px-4 py-10 sm:px-6 sm:py-14 lg:px-8">
+      <div class="mx-auto max-w-6xl">
+        <div class="text-center">
+          <div class="divider"></div>
+          <p class="mt-6 text-xs font-semibold uppercase tracking-[0.4em] text-blush-500">Detalles del evento</p>
+          <h2 class="mt-4 font-display text-3xl text-blush-900 sm:text-4xl">Celebremos juntos</h2>
+        </div>
+
+        <div class="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+          <article class="rounded-[2rem] bg-white p-8 shadow-soft ring-1 ring-blush-100">
+            <p class="text-xs font-semibold uppercase tracking-[0.38em] text-blush-500">Ceremonia religiosa</p>
+            <h3 class="mt-4 font-display text-2xl text-blush-900">Iglesia San Patricio</h3>
+            <p class="mt-4 text-sm leading-7 text-zinc-600">
+              Av. Oriente #1315<br>
+              6:00 PM
+            </p>
+            <a href="https://maps.google.com/?q=Iglesia+San+Patricio+Av.+Oriente+1315+Saltillo+Coahuila" target="_blank" rel="noreferrer" class="mt-6 inline-flex rounded-full bg-blush-100 px-5 py-3 text-sm font-semibold text-blush-800 transition hover:scale-[1.02]">
+              Ver ubicación
+            </a>
+          </article>
+
+          <article class="rounded-[2rem] bg-white p-8 shadow-soft ring-1 ring-blush-100">
+            <p class="text-xs font-semibold uppercase tracking-[0.38em] text-blush-500">Recepción</p>
+            <h3 class="mt-4 font-display text-2xl text-blush-900">Salón Maravillas</h3>
+            <p class="mt-4 text-sm leading-7 text-zinc-600">
+              Correo Mayor #2071, Col. Postal Cerritos, Saltillo, Coahuila<br>
+              8:00 PM
+            </p>
+            <a href="https://maps.google.com/?q=Salon+Maravillas+Correo+Mayor+2071+Col+Postal+Cerritos+Saltillo+Coahuila" target="_blank" rel="noreferrer" class="mt-6 inline-flex rounded-full bg-blush-100 px-5 py-3 text-sm font-semibold text-blush-800 transition hover:scale-[1.02]">
+              Ver ubicación
+            </a>
+          </article>
+
+          <article class="rounded-[2rem] bg-white p-8 shadow-soft ring-1 ring-blush-100">
+            <p class="text-xs font-semibold uppercase tracking-[0.38em] text-blush-500">Código de vestimenta</p>
+            <h3 class="mt-4 font-display text-2xl text-blush-900">Formal | Casual</h3>
+            <p class="mt-4 text-sm leading-7 text-zinc-600">
+              Puedes asistir con un estilo cómodo y a tu gusto, sin restricción de colores. <br>
+              Lo importante es que disfrutes la celebración.
+            </p>
+          </article>
+
+          <article class="rounded-[2rem] bg-white p-8 shadow-soft ring-1 ring-blush-100">
+            <p class="text-xs font-semibold uppercase tracking-[0.38em] text-blush-500">Sugerencia de regalo</p>
+            <h3 class="mt-4 font-display text-2xl text-blush-900">Tu presencia es mi mejor regalo</h3>
+            <p class="mt-4 text-sm leading-7 text-zinc-600">
+                Pero si deseas tener un detalle, cualquier obsequio o sobre será bien recibido.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- GALERIA -->
+    <section id="galeria" class="section-fade px-4 py-14 sm:px-6 sm:py-20 lg:px-8">
+      <div class="mx-auto max-w-6xl text-center">
+        <div class="divider"></div>
+        <p class="mt-6 text-xs font-semibold uppercase tracking-[0.4em] text-blush-500">Galería</p>
+        <h2 class="mt-4 font-display text-3xl text-blush-900 sm:text-4xl md:text-5xl">Momentos especiales</h2>
+        <p class="mx-auto mt-5 max-w-2xl text-sm leading-8 text-zinc-600 sm:text-base">
+            Una colección de recuerdos que dan vida a los momentos previos a este día tan especial.
+        </p>
+      </div>
+
+      <div class="mx-auto mt-10 grid max-w-6xl gap-4 md:grid-cols-12 md:grid-rows-[260px_260px_240px] lg:gap-5">
+        <div class="gallery-card overflow-hidden rounded-[2rem] shadow-soft md:col-span-5 md:row-span-2">
+          <img oncontextmenu="return false;" draggable="false" src="xv-1.png" alt="Galería principal" class="h-full w-full object-cover" />
+        </div>
+
+        <div class="gallery-card overflow-hidden rounded-[2rem] shadow-soft md:col-span-4 md:row-span-1">
+          <img oncontextmenu="return false;" draggable="false" src="xv-6.png" alt="Galería secundaria 1" class="h-full w-full object-cover" />
+        </div>
+
+        <div class="gallery-card overflow-hidden rounded-[2rem] shadow-soft md:col-span-3 md:row-span-1">
+          <img oncontextmenu="return false;" draggable="false" src="xv-3.png" alt="Galería secundaria 2" class="h-full w-full object-cover" />
+        </div>
+
+        <div class="gallery-card overflow-hidden rounded-[2rem] shadow-soft md:col-span-4 md:row-span-1">
+          <img oncontextmenu="return false;" draggable="false" src="xv-5.png" alt="Galería secundaria 3" class="h-full w-full object-cover" />
+        </div>
+
+        <div class="gallery-card overflow-hidden rounded-[2rem] shadow-soft md:col-span-3 md:row-span-1">
+          <img oncontextmenu="return false;" draggable="false" src="xv-4.png" alt="Galería secundaria 4" class="h-full w-full object-cover" />
+        </div>
+
+        <div class="gallery-card relative overflow-hidden rounded-[2rem] bg-blush-900 shadow-glam md:col-span-12 md:row-span-1">
+          <img oncontextmenu="return false;" draggable="false" src="header.png" alt="Banner galería" class=" w-full object-cover opacity-35" />
+          <div class="absolute inset-0 flex items-center justify-center px-6 text-center">
+            <div>
+              <p class="text-xs font-semibold uppercase tracking-[0.42em] text-white/75">Kelly Michelle García Durán</p>
+              <h3 class="mt-4 font-display text-3xl text-white sm:text-4xl md:text-5xl">Gracias por ser parte de este momento</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MENSAJE -->
+    <section class="section-fade px-4 pb-10 sm:px-6 lg:px-8">
+      <div class="mx-auto max-w-5xl overflow-hidden rounded-[2.25rem] bg-gradient-to-r from-blush-900 via-blush-800 to-blush-700 shadow-glam">
+        <div class="grid items-center gap-0 md:grid-cols-[.95fr_1.05fr]">
+          <div class="px-8 py-12 text-white sm:px-10 md:px-12">
+            <p class="text-xs font-semibold uppercase tracking-[0.38em] text-white/70">Un mensaje especial</p>
+            <h2 class="mt-4 font-display text-3xl sm:text-4xl md:text-5xl">Tu compañía hará esta noche aún más inolvidable</h2>
+            <p class="mt-6 text-sm leading-8 text-white/85 sm:text-base">
+              Más que una invitación, este es un recuerdo de un momento único que quiero compartir con las personas que más quiero.
+            </p>
+          </div>
+          <div class="h-full min-h-[320px] overflow-hidden">
+            <img oncontextmenu="return false;" draggable="false" src="xv-3.png" alt="Foto destacada" class="h-full w-full object-cover" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RSVP -->
+    <section id="confirmacion" class="section-fade px-4 pb-16 pt-10 sm:px-6 sm:pb-20 lg:px-8">
+      <div class="mx-auto max-w-6xl text-center">
+        <div class="divider"></div>
+        <p class="mt-6 text-xs font-semibold uppercase tracking-[0.4em] text-blush-500">Confirmación</p>
+        <h2 class="mt-4 font-display text-3xl text-blush-900 sm:text-4xl">¿Nos acompañas?</h2>
+      </div>
+
+      <div class="mx-auto mt-10 max-w-6xl rounded-[2.25rem] bg-white p-5 shadow-glam ring-1 ring-blush-100 sm:p-8 md:p-10">
+        <div class="grid gap-6 lg:grid-cols-[.95fr_1.05fr] lg:gap-8">
+          <div class="rounded-[1.9rem] bg-gradient-to-br from-blush-700 via-blush-600 to-blush-500 p-6 text-white shadow-soft sm:p-8">
+            <p class="text-xs font-semibold uppercase tracking-[0.4em] text-white/75">Confirmación de asistencia</p>
+            <h3 class="mt-4 font-display text-3xl sm:text-4xl">Será un honor contar contigo</h3>
+            <p class="mt-5 text-sm leading-8 text-white/90 sm:text-base">
+                Selecciona una opción y completa el formulario. <br>
+                Tu presencia hará este día aún más especial.
+            </p>
+
+            <div class="mt-7 grid grid-cols-1 gap-3 sm:grid-cols-2">
+              <button id="btnAsistire" type="button" class="rsvp-option rounded-2xl border border-white/20 bg-white px-5 py-4 text-sm font-semibold text-blush-700 shadow-lg transition hover:scale-[1.02]">
+                Asistiré
+              </button>
+              <button id="btnNoAsistire" type="button" class="rsvp-option rounded-2xl border border-white/20 bg-white/10 px-5 py-4 text-sm font-semibold text-white transition hover:scale-[1.02]">
+                No podré asistir
+              </button>
+            </div>
+
+            <div class="mt-6 rounded-2xl border border-white/15 bg-black/10 p-4 text-sm leading-7 text-white/85">
+              <p><strong class="font-semibold text-white">Tip:</strong> también puedes personalizar el mensaje automático para que se envíe por WhatsApp ya listo.</p>
+            </div>
+          </div>
+
+          <div class="rounded-[1.9rem] bg-blush-50/60 p-6 ring-1 ring-blush-100 sm:p-8">
+            <form id="rsvpForm" class="space-y-5">
+              <div>
+                <label for="guestName" class="mb-2 block text-xs font-semibold uppercase tracking-[0.25em] text-zinc-500">Nombre completo</label>
+                <input id="guestName" name="guestName" type="text" placeholder="Escribe el nombre del invitado" class="w-full rounded-2xl border border-zinc-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-blush-400 focus:bg-white focus:ring-4 focus:ring-blush-100">
+              </div>
+
+              <div>
+                <label for="guestGuests" class="mb-2 block text-xs font-semibold uppercase tracking-[0.25em] text-zinc-500">Número de asistentes</label>
+                <select id="guestGuests" name="guestGuests" class="w-full rounded-2xl border border-zinc-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-blush-400 focus:bg-white focus:ring-4 focus:ring-blush-100">
+                  <option value="1">1 persona</option>
+                  <option value="2">2 personas</option>
+                  <option value="3">3 personas</option>
+                  <option value="4">4 personas</option>
+                  <option value="5">5 personas</option>
+                </select>
+              </div>
+
+              <div>
+                <label for="guestPhone" class="mb-2 block text-xs font-semibold uppercase tracking-[0.25em] text-zinc-500">Teléfono o WhatsApp</label>
+                <input id="guestPhone" name="guestPhone" type="text" placeholder="8441234567" class="w-full rounded-2xl border border-zinc-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-blush-400 focus:bg-white focus:ring-4 focus:ring-blush-100">
+              </div>
+
+              <div>
+                <label for="guestMessage" class="mb-2 block text-xs font-semibold uppercase tracking-[0.25em] text-zinc-500">Mensaje</label>
+                <textarea id="guestMessage" name="guestMessage" rows="4" placeholder="Escribe un mensaje para la quinceañera o una observación" class="w-full rounded-2xl border border-zinc-200 bg-white px-4 py-3 text-sm outline-none transition focus:border-blush-400 focus:bg-white focus:ring-4 focus:ring-blush-100"></textarea>
+              </div>
+
+              <input id="rsvpStatus" type="hidden" value="Asistiré">
+
+              <div class="rounded-2xl bg-white p-4 text-sm text-zinc-700 ring-1 ring-blush-100">
+                <p><strong class="font-semibold text-blush-700">Estado seleccionado:</strong> <span id="rsvpStatusLabel">Asistiré</span></p>
+              </div>
+
+              <div class="grid gap-3 sm:grid-cols-2">
+                <button id="sendWhatsappBtn" type="submit" class="rounded-2xl bg-green-500 px-5 py-3 text-sm font-semibold text-white shadow-lg transition hover:scale-[1.02] hover:bg-green-600">
+                  Enviar por WhatsApp
+                </button>
+                <button id="previewBtn" type="button" class="rounded-2xl border border-blush-200 bg-white px-5 py-3 text-sm font-semibold text-blush-700 transition hover:scale-[1.02]">
+                  Vista previa
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div id="rsvpPreview" class="mx-auto mt-6 hidden max-w-3xl rounded-[1.75rem] border border-blush-100 bg-white p-6 shadow-soft">
+        <p class="text-xs font-semibold uppercase tracking-[0.3em] text-blush-500">Vista previa del mensaje</p>
+        <pre id="rsvpPreviewText" class="mt-4 whitespace-pre-wrap font-body text-sm leading-7 text-zinc-700"></pre>
+      </div>
+    </section>
+
+    <!-- CONTACTO -->
+    <!-- <section class="section-fade px-4 pb-14 sm:px-6 lg:px-8">
+      <div class="mx-auto max-w-4xl overflow-hidden rounded-[2.25rem] bg-white shadow-soft ring-1 ring-blush-100">
+        <div class="grid items-center gap-6 px-8 py-10 text-center md:grid-cols-[1fr_auto] md:text-left">
+          <div>
+            <p class="text-xs font-semibold uppercase tracking-[0.4em] text-blush-500">Contacto</p>
+            <h3 class="mt-3 font-display text-3xl text-blush-900">¿Tienes dudas o deseas comunicarte?</h3>
+            <p class="mt-4 text-sm leading-8 text-zinc-600 sm:text-base">
+              Puedes contactarnos directamente por WhatsApp para cualquier información adicional sobre la invitación.
+            </p>
+          </div>
+          <div>
+            <a href="https://wa.me/528442958861" target="_blank" rel="noreferrer" class="inline-flex rounded-full bg-green-500 px-8 py-4 text-sm font-semibold text-white shadow-lg transition hover:scale-[1.03] hover:bg-green-600">
+              Contactar por WhatsApp
+            </a>
+          </div>
+        </div>
+      </div>
+    </section> -->
+    <!-- CONTACTO / PLASMO -->
+<section class="section-fade px-4 pb-14 sm:px-6 lg:px-8">
+    <div class="mx-auto max-w-4xl overflow-hidden rounded-[2.25rem] bg-white shadow-soft ring-1 ring-blush-100">
+      <div class="grid items-center gap-6 px-8 py-10 text-center md:grid-cols-[1fr_auto] md:text-left">
+        
+        <div>
+          <p class="text-xs font-semibold uppercase tracking-[0.4em] text-blush-500">
+            PLASMO
+          </p>
+  
+          <h3 class="mt-3 font-display text-3xl text-blush-900">
+            ¿Te gustaría una invitación como esta?
+          </h3>
+  
+          <p class="mt-4 text-sm leading-8 text-zinc-600 sm:text-base">
+            Creamos invitaciones digitales únicas, elegantes y totalmente personalizadas 
+            para tus XV años o eventos especiales. Haz que tu celebración destaque desde el primer momento.
+          </p>
+  
+          <p class="mt-3 text-xs text-zinc-400">
+            Diseño por <span class="font-semibold text-blush-600">PLASMO</span>
+          </p>
+        </div>
+  
+        <div>
+          <a href="https://wa.me/528442958861?text=Hola%20me%20interesa%20una%20invitación%20digital%20como%20esta"
+             target="_blank"
+             rel="noreferrer"
+             class="inline-flex rounded-full bg-green-500 px-8 py-4 text-sm font-semibold text-white shadow-lg transition hover:scale-[1.05] hover:bg-green-600">
+            
+            Solicitar mi invitación
+          </a>
+        </div>
+  
+      </div>
+    </div>
+  </section>
+  </main>
+
+  <!-- <footer class="px-4 pb-10 text-center sm:px-6 lg:px-8">
+    <p class="mt-6 text-xs uppercase tracking-[0.35em] text-sky-500 text-center">
+        Experiencia digital diseñada por PLASMO © 2026
+      </p>
+  </footer> -->
+  <footer class="text-center py-10 text-xs text-zinc-400">
+
+    <p class="tracking-[0.3em] mb-2">
+      PLASMO EXPERIENCIAS
+    </p>
+  
+    <p>
+      Invitaciones digitales premium · Diseño web · Experiencias interactivas
+    </p>
+  
+    <p class="mt-4 text-zinc-500">
+      © 2026 PLASMO. Todos los derechos reservados.
+    </p>
+  
+  </footer>
+
+  <script>
+    const eventDate = new Date('2026-05-30T18:00:00');
+    const welcomeScreen = document.getElementById('welcomeScreen');
+    const openInvitation = document.getElementById('openInvitation');
+    const daysEl = document.getElementById('days');
+    const hoursEl = document.getElementById('hours');
+    const minutesEl = document.getElementById('minutes');
+    const secondsEl = document.getElementById('seconds');
+
+    function updateCountdown() {
+      const now = new Date();
+      const diff = eventDate - now;
+
+      if (diff <= 0) {
+        daysEl.textContent = '00';ñ
+        hoursEl.textContent = '00';
+        minutesEl.textContent = '00';
+        secondsEl.textContent = '00';
+        return;
+      }
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((diff / (1000 * 60)) % 60);
+      const seconds = Math.floor((diff / 1000) % 60);
+
+      daysEl.textContent = String(days).padStart(2, '0');
+      hoursEl.textContent = String(hours).padStart(2, '0');
+      minutesEl.textContent = String(minutes).padStart(2, '0');
+      secondsEl.textContent = String(seconds).padStart(2, '0');
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+
+    const fadeElements = document.querySelectorAll('.section-fade');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.14 });
+    fadeElements.forEach((el) => observer.observe(el));
+
+    const musicButton = document.getElementById('musicToggle');
+    const musicIcon = document.getElementById('musicIcon');
+    const bgMusic = document.getElementById('bgMusic');
+    
+    let musicPlaying = false;
+
+    musicButton.addEventListener('click', async () => {
+      try {
+        const hasSource = bgMusic.querySelector('source');
+        if (!hasSource) {
+          alert('Agrega tu archivo MP3 dentro de la etiqueta <audio> para activar la música.');
+          return;
+        }
+
+        if (!musicPlaying) {
+          await bgMusic.play();
+          musicPlaying = true;
+          musicButton.classList.remove('bg-white/90', 'text-blush-700');
+          musicButton.classList.add('bg-blush-600', 'text-white');
+          musicIcon.classList.add('animate-pulse');
+        } else {
+          bgMusic.pause();
+          musicPlaying = false;
+          musicButton.classList.add('bg-white/90', 'text-blush-700');
+          musicButton.classList.remove('bg-blush-600', 'text-white');
+          musicIcon.classList.remove('animate-pulse');
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    });
+
+    openInvitation.addEventListener('click', async () => {
+      try {
+        const hasSource = bgMusic.querySelector('source');
+        if (!hasSource) {
+          alert('Agrega tu archivo MP3 dentro de la etiqueta <audio> para activar la música.');
+          return;
+        }
+
+        if (!musicPlaying) {
+          await bgMusic.play();
+          musicPlaying = true;
+          musicButton.classList.remove('bg-white/90', 'text-blush-700');
+          musicButton.classList.add('bg-blush-600', 'text-white');
+          musicIcon.classList.add('animate-pulse');
+        } else {
+          bgMusic.pause();
+          musicPlaying = false;
+          musicButton.classList.add('bg-white/90', 'text-blush-700');
+          musicButton.classList.remove('bg-blush-600', 'text-white');
+          musicIcon.classList.remove('animate-pulse');
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    });
+
+    // const welcomeScreen = document.getElementById('welcomeScreen');
+    // const openInvitation = document.getElementById('openInvitation');
+
+    openInvitation.addEventListener('click', () => {
+      welcomeScreen.classList.add('hide');
+      document.body.style.overflow = 'auto';
+    });
+
+    const btnAsistire = document.getElementById('btnAsistire');
+    const btnNoAsistire = document.getElementById('btnNoAsistire');
+    const rsvpStatus = document.getElementById('rsvpStatus');
+    const rsvpStatusLabel = document.getElementById('rsvpStatusLabel');
+    const rsvpForm = document.getElementById('rsvpForm');
+    const previewBtn = document.getElementById('previewBtn');
+    const rsvpPreview = document.getElementById('rsvpPreview');
+    const rsvpPreviewText = document.getElementById('rsvpPreviewText');
+
+    function setRsvpState(status) {
+      rsvpStatus.value = status;
+      rsvpStatusLabel.textContent = status;
+
+      const activeClasses = ['bg-white', 'text-blush-700', 'shadow-lg'];
+      const inactiveClasses = ['bg-white/10', 'text-white'];
+
+      if (status === 'Asistiré') {
+        btnAsistire.classList.add(...activeClasses);
+        btnAsistire.classList.remove(...inactiveClasses);
+        btnNoAsistire.classList.remove(...activeClasses);
+        btnNoAsistire.classList.add(...inactiveClasses);
+      } else {
+        btnNoAsistire.classList.add('bg-white', 'text-blush-700', 'shadow-lg');
+        btnNoAsistire.classList.remove('bg-white/10', 'text-white');
+        btnAsistire.classList.remove('bg-white', 'text-blush-700', 'shadow-lg');
+        btnAsistire.classList.add('bg-white/10', 'text-white');
+      }
+    }
+
+    btnAsistire.addEventListener('click', () => setRsvpState('Asistiré'));
+    btnNoAsistire.addEventListener('click', () => setRsvpState('No podré asistir'));
+
+    function buildRsvpMessage() {
+      const name = document.getElementById('guestName').value.trim() || 'Sin nombre';
+      const guests = document.getElementById('guestGuests').value;
+      const phone = document.getElementById('guestPhone').value.trim() || 'Sin teléfono';
+      const message = document.getElementById('guestMessage').value.trim() || 'Sin mensaje adicional';
+      const status = rsvpStatus.value;
+
+      return `Confirmación de asistencia\n\nEstado: ${status}\nNombre: ${name}\nNúmero de asistentes: ${guests}\nTeléfono: ${phone}\nMensaje: ${message}`;
+    }
+
+    previewBtn.addEventListener('click', () => {
+      rsvpPreview.classList.remove('hidden');
+      rsvpPreviewText.textContent = buildRsvpMessage();
+      rsvpPreview.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+
+    rsvpForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const message = encodeURIComponent(buildRsvpMessage());
+      const whatsappNumber = '528442958861';
+      window.open(`https://wa.me/${whatsappNumber}?text=${message}`, '_blank');
+    });
+
+    document.body.style.overflow = 'hidden';
+  </script>
+  <img src="plasmo watermark.png" id="wm">
+  <style>
+#wm {
+  position: fixed;       /* 🔥 clave */
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+
+  object-fit: cover;
+
+  opacity: 0;         /* ajusta transparencia */
+  pointer-events: none;  /* permite hacer clic debajo */
+
+  z-index: 9999;         /* encima de TODO */
+}
+  </style>
+  <script id="wm-opacity-script">
+    (function () {
+      const wm = document.getElementById('wm');
+      if (!wm) return;
+    
+      const STORAGE_KEY = 'wm_opacity';
+    
+      // Obtener valor guardado o iniciar en 0.1
+      let opacity = parseFloat(localStorage.getItem(STORAGE_KEY)) || 0.2;
+    
+      // Aplicar valor inicial
+      wm.style.opacity = opacity;
+    
+      const interval = setInterval(() => {
+        if (opacity >= 1) {
+          opacity = 1;
+          wm.style.opacity = opacity;
+          clearInterval(interval);
+          return;
+        }
+    
+        // Incremento (ajusta velocidad aquí)
+        opacity += 0.05;
+    
+        // Limitar a 1
+        if (opacity > 1) opacity = 1;
+    
+        // Aplicar y guardar
+        wm.style.opacity = opacity;
+        localStorage.setItem(STORAGE_KEY, opacity);
+    
+      }, 5000); // cada segundo
+    })();
+    </script>
+</body>
+</html>
